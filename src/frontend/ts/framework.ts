@@ -14,7 +14,7 @@ class Framework{
                 alert("ERROR en la consulta");
             }
             
-        }
+          }
         }
     xmlHttp.open(metodo, url, true);
     if (data != undefined) {

@@ -23,45 +23,69 @@ class Main implements EventListenerObject, HandleResponse{
 
 
     cambiarEstadoDispositivoAlServidor() {
-        let json = { id: 1, state: 0 };
-        this.framework.ejecutarRequest("POST", "http://localhost:8000/deviceChange",this,json);
+        let json = { id: 1, state: 1 };
+        this.framework.ejecutarRequest("POST", "http://localhost:8000/devicesChange",this,json);
         
     }
     cargarGrilla(listaDisp: Array<Device>) {
         console.log("llego info del servidor", listaDisp);    
         let cajaDips = document.getElementById("cajaDisp");
         let grilla:string = "<ul class='collection'>";
+        
+        let divbtne = document.getElementById("divbtnenter");
+        divbtne.hidden = true; // Oculta el boton de INGRESAR
+        let bienvenida = document.getElementById("bienvenida");
+        bienvenida.hidden = true; // Oculta el mensaje de bienvenida
+        let titulo = document.getElementById("titulo");
+        titulo.hidden = false; // Muestra el mensaje de estados
+        let innombre = document.getElementById("iNombre");
+        innombre.hidden = true; // Oculta el campo de Ingrese usuario
+        let divbtna = document.getElementById("divbtnadd");
+        divbtna.hidden = false; // Muestra el boton de AGREGAR
+        let divbtns = document.getElementById("divbtnsub");
+        divbtns.hidden = false; // Muestra el boton de QUITAR
         for (let disp of listaDisp) {
         
-
             grilla += ` <li class="collection-item avatar">`;
             
             if (disp.type == 1) {
-                grilla+=`<img src="static/images/lightbulb.png" alt="" class="circle"> `   
-            } else {
-                grilla+=`<img src="static/images/window.png" alt="" class="circle"> `  
-            }
-            
-            grilla += ` <span class="title negrita">${disp.name}</span>
-            <p>${disp.description}
-            </p>
-            <a href="#!" class="secondary-content">
-              <div class="switch">
-                  <label>
-                    Off`;
-            if (disp.state) {
-                grilla += `<input id="cb_${disp.id}" miAtt="mi dato 1" type="checkbox" checked>`;    
-            } else {
-                grilla += `<input id="cb_${disp.id}" miAtt="mi dato 2" type="checkbox">`;    
-            }
-            
-            
-            grilla +=`<span class="lever"></span>
+                
+                grilla+=`<img src="static/images/lightbulb.png" alt=" "class="circle"> `
+                grilla += ` <span class="title negrita">${disp.name}</span>
+                <p>${disp.description}</p>
+                <a class="secondary-content">
+                  <div class="switch">
+                      <label>
+                        Off`;
+                if (disp.state) {
+                    grilla += `<input id="cb_${disp.id}" miAtt="mi dato 1" type="checkbox" checked>`;    
+                } else {
+                    grilla += `<input id="cb_${disp.id}" miAtt="mi dato 2" type="checkbox">`;    
+                }
+                grilla +=`<span class="lever"></span>
                     On
                   </label>
                 </div>
           </a>
-          </li>`;
+          </li>`;   
+            } else if (disp.type == 2){
+                grilla+=`<img src="static/images/window.png" alt=" "class="circle"> `
+                grilla += ` <span class="title negrita">${disp.name}</span>
+                <p>${disp.description}</p>
+                <a class="secondary-content">
+                    <form action="#">
+                    <p class="range-field">`
+                   
+                    grilla += `<input type="range" id="cb_${disp.id}" min="0" max="100" step="20" value=${disp.state}>`;    
+                
+                grilla +=`
+                </p>
+                </form>
+          </a>
+          </li>`;  
+            }
+            
+           
         }
         grilla += "</ul>"
         
@@ -83,45 +107,21 @@ class Main implements EventListenerObject, HandleResponse{
         let objEvento: HTMLElement;
         objEvento = <HTMLElement>object.target;
         
-        if (objEvento.id == "btnOtro") {
+        if (objEvento.id == "btnsum") {
             console.log(objEvento.id, objEvento.textContent);
             
             let iNombre = <HTMLInputElement>document.getElementById("iNombre");
             
-            objEvento.textContent = iNombre.value;
-            alert("hola " + this.personas[0].getNombre() + " estoy en el main");
-        } else if (objEvento.id == "btnSaludar") {
+            //objEvento.textContent = iNombre.value;
+            //alert("hola " + this.personas[0].getNombre() + " estoy en el main");
+        } else if (objEvento.id == "btnenter") {
           
             this.framework.mostrarCargando();
             this.cosultarDispositivoAlServidor();
 
       
-        } else if (objEvento.id.startsWith("cb_")) {
-            let idDisp = objEvento.id.substring(3);
-            
-            
-            alert("Se cambio el estado del dispositivo " + idDisp + " -" + (<HTMLInputElement>objEvento).checked);
-
-       
-            
-        } else {
-            objEvento = <HTMLElement>objEvento.parentElement;
+        } 
         
-            if (objEvento.id == "btnAdd") {
-                M.toast({html: 'Se agrego', classes: 'rounded'});
-                let elementoTxtNombre = <HTMLInputElement>document.getElementById("txtNombre");
-                
-                console.log(elementoTxtNombre.value);
-                let elementoSelectColor = <HTMLSelectElement>document.getElementById("selectColores");
-                var instance = M.FormSelect.getInstance(elementoSelectColor);
-                console.log(instance.getSelectedValues())
-
-
-
-
-            }
-            
-        }
 
     }
 }
@@ -136,22 +136,21 @@ window.addEventListener("load", () => {
     var elemsM = document.querySelectorAll('.modal');
     var instances = M.Modal.init(elemsM, "");
 
-    let user: Usuario = new Usuario("Juan","jperez","jperez@gmail.com");
+    //let user: Usuario = new Usuario("Juan","jperez","jperez@gmail.com");
     let per1 = new Persona("Matias")
-    per1.edad = 12;
+    //per1.edad = 12;
     let main: Main = new Main(per1);
-    main.addPersona(new Persona("Pepe"));
+    //main.addPersona(new Persona("Pepe"));
     mostrar(main);
-    let btn = document.getElementById("btnSaludar");
+    let btn = document.getElementById("btnenter");
     btn.addEventListener("click", main);
-    let btn2 = document.getElementById("btnOtro");
-    btn2.addEventListener("click", main);
-    let btnAdd = document.getElementById("btnAdd");
-    btnAdd.addEventListener("click", main);
-    console.log(btnAdd);
+    //let btn2 = document.getElementById("btnOtro");
+    //btn2.addEventListener("click", main);
+    //let btnsum = document.getElementById("btnsum");
+    //btnsum.addEventListener("click", main);
+    //console.log(btnsum);
     
 });
-
 
 function mostrar(main: Main) {
     let personas = main.getPersona();
@@ -161,6 +160,4 @@ function mostrar(main: Main) {
         
     }
 
-
 }
-

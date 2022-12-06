@@ -7,9 +7,9 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
       <script type="text/javascript" src="static/js/materialize.min.js"></script>
 
-      <script type="text/javascript" src="js/persona.js "></script>
-      <script type="text/javascript" src="js/usuario.js "></script>
-      <script type="text/javascript" src="js/device.js   "></script>
+      <script type="text/javascript" src="js/persona.js"></script>
+      <script type="text/javascript" src="js/usuario.js"></script>
+      <script type="text/javascript" src="js/device.js"></script>
       <script type="text/javascript" src="js/framework.js"></script>
       <script type="text/javascript" src="js/main.js"></script>
      
@@ -21,7 +21,7 @@
             <!-- Navigation bar -->
             <nav style="background-color:#124580">
                 <div class="nav-wrapper">
-                    <a href="#!" class="brand-logo left" style="margin-left: 15px;">Smart Home</a>
+                    <a href="http://localhost:8000/" class="brand-logo left" style="margin-left: 15px;"><i class="material-icons">settings_remote</i>Smart Home</a>
                     <ul id="nav-mobile" class="right" style="margin-right: 15px;">
                         <li><a href="#">Help</a></li>
                     </ul>
@@ -30,59 +30,51 @@
             <!-- Page Body -->
             <div class="container">
                 <br/>
-                <h3 >Smart Home Web Client!</h3>
+                <h3 id="bienvenida">Bienvenido al sistema de control de ambientes</h3>
+                <h3 id="titulo" hidden>Estado de los dispositivos</h3>
                 <br/>
-              
-                <div class="row">
-                    
-                    <div class="col s12 m6 l4 xl4" style="background-color: red;">
-                        a
-                        
-                        <a class="waves-effect waves-light btn modal-trigger" href="#modalAlta">Abrir</a>
-
-                    </div>
-                    <div class="col s12 m6 l4 xl4" style="background-color: rgb(111, 255, 0);">
-                        b                    
-                    </div>
-                    <div class="col s12 m12 l4 xl4" style="background-color: rgb(0, 94, 255);">
-                        c                    
-                    </div>
-                </div>
-                
-
-
-
+                <!--<h6 id="saludo">Hola</h6>-->             
                 <div class="row">
                     <div id="cajaDisp">
                     </div>
                     <div class="input-field col s12 m12 l12 xl12">
-                        <input id="iNombre" value="texto por defecto"/>
-                        <textarea id="textarea_1" class="materialize-textarea" style="height: 150px;" >xxxx</textarea>
+                        <input id="iNombre" placeholder="Ingrese usuario"/> <!--La idea es poner a futuro un logueo con usuario-->
+                    
                     </div>
-                    <div class="col s12 m4 l2 xl2">
-                        <button class="btn waves-effect waves-light button-view" id="btnSaludar" name="hello_button">PRESS ME</button>
+                    <div id="divbtnenter" class="col s12 m4 l2 xl2">
+                        <button class="btn waves-effect waves-light button-view" id="btnenter" 
+                        name="hello_button">Ingresar</button>
                       
                     </div>
-                    <div class="col s12 xl2">
-                        <button class="btn waves-effect waves-light button-view" id="btnOtro" name="hello_button">Otro</button>
+                    <div hidden id="divbtnadd" class="col s12 xl2">
+                        <button class="btn waves-effect waves-light button-view" id="btnadd" 
+                        name="hello_button">Agregar</button> <!--La idea es poner a futuro la funcion de agregar dispositivos-->
+                    </div>
+                    <div hidden id="divbtnsub" class="col s12 xl2">
+                        <button class="btn waves-effect waves-light button-view" id="btnsub" 
+                        name="hello_button">Quitar</button> <!--La idea es poner a futuro la funcion de quitar dispositivos-->
                     </div>
                 </div>
             </div>	
         </main>
-		<!-- Page Footer -->
+		
+        <!-- Page Footer -->
         <footer class="page-footer" style="background-color:#124580">
             <div class="container">
                 <div class="row">
                     <div class="col l6 s6">
                         <h5 class="white-text">Smart Home</h5>
-                        <p class="grey-text text-lighten-4">Copyright ### - 2021</p>
+                        <p class="grey-text text-lighten-4">Copyright Javier Fanelli - FIUBA - 2022</p>
                     </div>
                     <div class="col l6 s6">
                         <h5 class="white-text right-align">Contact</h5>
                         <p class="white-text right-align">
-                            <a class="grey-text text-lighten-3" href="!#">Email | </a>
-                            <a class="grey-text text-lighten-3" href="!#">Twitter | </a>
-                            <a class="grey-text text-lighten-3" href="!#">LinkedIn</a>
+                            <a class="grey-text text-lighten-3" href="mailto:javifanelli@gmail.com?subject=Hola! quiero hacer una consulta" 
+                            target="_blank">Email | </a> <!--Envia un mail a mi mail-->
+                            <a class="grey-text text-lighten-3" href="https://www.instagram.com/javi_fanelli/" 
+                            target="_blank">Instagram | </a> <!--No tengo Twitter, lo cambie por mi Instagram-->
+                            <a class="grey-text text-lighten-3" href="https://www.linkedin.com/in/javier-fanelli-48ba2b74/" 
+                            target="_blank">LinkedIn</a> <!--Abre mi perfil de Linkedin-->
                         </p>
                     </div>
                 </div>
@@ -91,31 +83,6 @@
 		<!--JavaScript at end of body for optimized loading-->
 	
 
-        <div id="modalAlta" class="modal">
-            <div class="modal-content">
-                <div class="row">
-                    <div class="input-field col s6">
-                        <select multiple id="selectColores">
-                          <option value="" disabled selected>Seleccione</option>
-                          <option value="rojo">Rojo</option>
-                          <option value="verde">Verde</option>
-                          <option value="azul">Azul</option>
-                        </select>
-                        <label>Color de luz</label>
-                      </div>
-                      <div class="input-field col s6">
-                        <input id="txtNombre" type="text" class="validate">
-                        <label for="txtNombre">Nombre</label>
-                      </div>
-
-                   
-                </div>
-            </div>
-            <div class="modal-footer">
-                <a id="btnAdd" class="btn-floating btn-large waves-effect waves-light red">
-                    <i class="material-icons">add</i>
-                </a>
-            </div>
-          </div>
+        
     </body>
   </html>

@@ -45,12 +45,9 @@ CREATE TABLE `Devices` (
 --
 
 INSERT INTO `Devices` (`id`, `name`, `description`, `state`, `type`) VALUES
-(1, 'Lampara 1', 'Luz living', 1, 0),
-(2, 'Lampara 2', 'Luz cocina', 0, 0),
-(3, 'Velador', 'Velador living', 1, 0),
-(4, 'Persiana 1', 'Persiana living', 1, 1),
-(5, 'Persiana 2', 'Persiana de la cocina', 1, 1),
-(6, 'Persiana 3', 'Persiana balcon', 0, 1);
+(1, 'Lampara 1', 'Luz living', 0, 1), -- Inicializa los dispositivos apagados. Tipo 1 son ON-OFF
+(2, 'Cortina 1', 'Cortina habitación', 0, 2); -- Inicializa los dispositivos apagados. Tipo 2 son 0%-100% con saltos de a 20%
+
 
 --
 -- Indexes for dumped tables
