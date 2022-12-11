@@ -158,7 +158,7 @@ En esta sección podés ver los detalles específicos de funcionamiento del cód
 
 ### Agregar un dispositivo
 
-Completá los pasos para agregar un dispositivo desde el cliente web.
+Se colocaron los botones de "AGREGAR" y "QUITAR", aunque todavía no están implementadas las funciones.
 
 ### Frontend
 
