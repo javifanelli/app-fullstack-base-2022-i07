@@ -32,7 +32,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `Devices`
 --
 
-CREATE TABLE `Devices` (
+CREATE TABLE IF NOT EXISTS `Devices` (
   `id` int(11) NOT NULL,
   `name` varchar(64) NOT NULL,
   `description` varchar(128) NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE `Devices` (
 
 INSERT INTO `Devices` (`id`, `name`, `description`, `state`, `type`) VALUES
 (1, 'Lampara 1', 'Luz living', 0, 1), -- Inicializa los dispositivos apagados. Tipo 1 son ON-OFF
-(2, 'Cortina 1', 'Cortina habitación', 0, 2); -- Inicializa los dispositivos apagados. Tipo 2 son 0%-100% con saltos de a 20%
+(2, 'Cortina 1', 'Cortina habitacion', 0, 2); -- Inicializa los dispositivos apagados. Tipo 2 son 0%-100% con saltos de a 20%
 
 
 --
@@ -67,7 +67,7 @@ ALTER TABLE `Devices`
 -- AUTO_INCREMENT for table `Devices`
 --
 ALTER TABLE `Devices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

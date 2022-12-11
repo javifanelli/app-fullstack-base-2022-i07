@@ -19,7 +19,7 @@ connection.connect(function(err) {
     }
     console.log('Connected to DB under thread ID: ' + connection.threadId);
 });
-
+ 
 module.exports = connection;
-
+//var mysql = fs.readfileSync('./db/dumps/smart_home.sql');
 //=======[ End of file ]=======================================================
