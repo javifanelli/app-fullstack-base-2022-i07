@@ -162,7 +162,7 @@ Se colocaron los botones de "AGREGAR" y "QUITAR", aunque todavía no están impl
 
 ### Frontend
 
-Completá todos los detalles sobre cómo armaste el frontend, sus interacciones, etc.
+El frontend se armó en base a la maqueta que el profesor fue haciendo en clase y se fue modificando a necesidad. Sigue en desarrollo.
 
 ### Backend
 
