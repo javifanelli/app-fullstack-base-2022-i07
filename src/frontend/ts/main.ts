@@ -28,10 +28,14 @@ class Main implements EventListenerObject, HandleResponse{
         let titulo = document.getElementById("titulo");
         titulo.hidden = false; // Muestra el mensaje de estados
         let innombre = document.getElementById("iNombre");
+        let nombre:string = (<HTMLInputElement>document.getElementById("iNombre")).value;
+        let Hola = document.getElementById ("hola");
+        Hola.innerHTML = `Hola` + ` ` + nombre;
+        Hola.hidden = false; // Muestra el nombre ingresado en el campo
         innombre.hidden = true; // Oculta el campo de Ingrese usuario
         let divbtna = document.getElementById("divbtnadd");
         divbtna.hidden = false; // Muestra el boton de AGREGAR
-        
+          
         for (let disp of listaDisp) {
             grilla += `<li class="collection-item avatar">`;
             if (disp.type == 1) {
