@@ -16,7 +16,7 @@ class Framework{
     //}
   }
 
-  public cambioRequest(metodo: string, url: string, responseHandler:HandleResponse, data){
+  public cambioRequest(metodo: string, url: string, responseHandler:HandleResponse, data: any){
     let xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = () => {
       if (xmlHttp.readyState == 4) {
@@ -29,8 +29,10 @@ class Framework{
           }
         }
     xmlHttp.open(metodo, url, true);
-    xmlHttp.send();
-    //}
+    if (data != undefined) {
+      xmlHttp.setRequestHeader("Content-Type", "application/json");  
+      xmlHttp.send(JSON.stringify(data));
+    }
   }
 
 }

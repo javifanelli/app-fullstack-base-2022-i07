@@ -31,8 +31,7 @@ class Main implements EventListenerObject, HandleResponse{
         innombre.hidden = true; // Oculta el campo de Ingrese usuario
         let divbtna = document.getElementById("divbtnadd");
         divbtna.hidden = false; // Muestra el boton de AGREGAR
-        let divbtns = document.getElementById("divbtnsub");
-        divbtns.hidden = false; // Muestra el boton de QUITAR
+        
         for (let disp of listaDisp) {
             grilla += `<li class="collection-item avatar">`;
             if (disp.type == 1) {
@@ -49,11 +48,16 @@ class Main implements EventListenerObject, HandleResponse{
                     grilla += `<input id="cb_${disp.id}" miAtt="mi dato 2" type="checkbox">`;    
                 }
                 grilla +=`<span class="lever"></span>
-                    On
-                  </label>
-                </div>
-                </a>
-                </li>`;   
+                        On
+                        </label>
+                        </div>
+                        </a>
+                        <br>
+                        <button class="btn waves-effect waves-light button-view" id="btnmod${disp.id}" 
+                        name="hello_button">Modificar</button>
+                        <button class="btn waves-effect waves-light button-view" id="btnsub${disp.id}" 
+                        name="hello_button">Quitar</button>
+                        </li>`;   
             }
             else if (disp.type == 2){
                 grilla+=`<img src="static/images/window.png" alt=" "class="circle"> `
@@ -63,13 +67,18 @@ class Main implements EventListenerObject, HandleResponse{
                 <form action="#">
                 <p class="range-field">`
                 grilla += `<input type="range" id="cb_${disp.id}" min="0" max="100" step="20" value=${disp.state}>`;    
-                grilla +=`
-                </p>
-                </form>
-                </a>
-                </li>`;  
+                grilla +=`</p>
+                        </form>
+                        </a>
+                        <br>
+                        <button class="btn waves-effect waves-light button-view" id="btnmod${disp.id}" 
+                        name="hello_button">Modificar</button>
+                        <button class="btn waves-effect waves-light button-view" id="btnsub${disp.id}" 
+                        name="hello_button">Quitar</button>
+                        </li>`;  
             }
         }
+        
         grilla += `</ul>`;
         cajaDips.innerHTML = grilla;
         for (let disp of listaDisp) {
@@ -85,7 +94,7 @@ class Main implements EventListenerObject, HandleResponse{
             this.cosultarDispositivos();
         } else if (objEvento.id.startsWith("cb_")) 
         {
-            let disp_id: number = +(<HTMLInputElement>document.getElementById("disp.id")).value;
+            let disp_id: number = +(<HTMLInputElement>document.getElementById("cb")).value;
             let disp_state = 1;
             this.cambiarDispositivos(disp_id, disp_state);
         }
