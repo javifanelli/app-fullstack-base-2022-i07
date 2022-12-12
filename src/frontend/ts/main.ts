@@ -12,9 +12,9 @@ class Main implements EventListenerObject, HandleResponse{
         this.framework.dispRequest("GET", "http://localhost:8000/devices",this);
     }
 
-    cambiarDispositivos(id: number, state: number) {
-        let json = { id: 1, state: 1 };
-        this.framework.cambioRequest("PUT", "http://localhost:8000/devices/${id}",this,json);
+    cambiarDispositivos(name: string, desc: string, type: number, state: number, id: number) {
+        let nuevodisp = {name: name, desc: desc, type: type, state: state, id: id};
+        this.framework.cambioRequest("PUT", "http://localhost:8000/devices/${id}",this, nuevodisp);
     }
     
     cargarGrilla(listaDisp: Array<Device>) {
@@ -47,9 +47,9 @@ class Main implements EventListenerObject, HandleResponse{
                 <label>
                 Off`;
                 if (disp.state) {
-                    grilla += `<input id="cb_${disp.id}" miAtt="mi dato 1" type="checkbox" checked>`;    
+                    grilla += `<input id="val_${disp.id}" miAtt="mi dato 1" type="checkbox" checked>`;    
                 } else {
-                    grilla += `<input id="cb_${disp.id}" miAtt="mi dato 2" type="checkbox">`;    
+                    grilla += `<input id="val_${disp.id}" miAtt="mi dato 2" type="checkbox">`;    
                 }
                 grilla +=`<span class="lever"></span>
                         On
@@ -70,7 +70,7 @@ class Main implements EventListenerObject, HandleResponse{
                 <a class="secondary-content">
                 <form action="#">
                 <p class="range-field">`
-                grilla += `<input type="range" id="cb_${disp.id}" min="0" max="100" step="20" value=${disp.state}>`;    
+                grilla += `<input type="range" id="val_${disp.id}" min="0" max="100" step="20" value=${disp.state}>`;    
                 grilla +=`</p>
                         </form>
                         </a>
@@ -86,8 +86,8 @@ class Main implements EventListenerObject, HandleResponse{
         grilla += `</ul>`;
         cajaDips.innerHTML = grilla;
         for (let disp of listaDisp) {
-            let cb = document.getElementById("cb_" + disp.id);
-            cb.addEventListener("click", this);
+            let val = document.getElementById("val_" + disp.id);
+            val.addEventListener("click", this);
         }
     }
 
@@ -96,11 +96,11 @@ class Main implements EventListenerObject, HandleResponse{
         objEvento = <HTMLElement>object.target;
         if (objEvento.id == "btnenter") {
             this.cosultarDispositivos();
-        } else if (objEvento.id.startsWith("cb_")) 
+        } else if (objEvento.id.startsWith("val_")) 
         {
-            let disp_id: number = +(<HTMLInputElement>document.getElementById("cb")).value;
-            let disp_state = 1;
-            this.cambiarDispositivos(disp_id, disp_state);
+            let disp_id: number = 1;//+(<HTMLInputElement>document.getElementById("cb")).value;
+            let disp_state: number = 0;
+            this.cambiarDispositivos("Lampara 1", "Luz living", 1, disp_state, disp_id); //Luz living
         }
     }
 }
