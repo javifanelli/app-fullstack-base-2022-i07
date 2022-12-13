@@ -13,12 +13,11 @@ class Main implements EventListenerObject, HandleResponse{
     }
 
     cambiarDispositivos (idDis: number, name: string, desc: string, type: number, state: number) {
-        let nuevodisp = ({name: name, desc: desc, type: type, state: state});
+        let nuevodisp = {name: name, desc: desc, type: type, state: state};
         this.framework.cambioRequest("PUT", `http://localhost:8000/devices/${idDis}`,this, nuevodisp);
     }
     
     cargarGrilla(listaDisp: Array<Device>) {
-        console.log("llego info del servidor", listaDisp);    
         let cajaDips = document.getElementById("cajaDisp");
         let grilla:string = `<ul class="collection">`;
         let divbtne = document.getElementById("divbtnenter");
@@ -96,10 +95,10 @@ class Main implements EventListenerObject, HandleResponse{
         objEvento = <HTMLElement>object.target;
         if (objEvento.id == "btnenter") {
             this.cosultarDispositivos();
-            
-        } else if (objEvento.id.startsWith ("val")) 
+        } //else
+        if (objEvento.id.startsWith ("val_")) 
         {
-            //let disp_id: number = +(<HTMLInputElement>document.getElementById(objEvento));
+            //let disp_id = objEvento.id;
             //let disp_state: number = 0;
             this.cambiarDispositivos (1, "Lampara 1", "Luz living", 1, 1);
         }
