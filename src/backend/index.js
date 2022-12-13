@@ -31,13 +31,14 @@ app.get('/devices/:id', function(req, res, next) { // Consultar de a 1 los dispo
     );
 });
 
-app.put('/devices/:id', function(req, res, next) { // Actualizar la salida del dispositivo
-    utils.query('UPDATE `Devices` SET `name`=?, `description`=?, `type`=? , `state`=? WHERE `id`=?', [req.body.name, req.body.descripion, req.body.type, req.body.state, req.params.id], function(err, rta, field) {
+app.put('/devices/:id', function(req, res, next) { // Actualizar el dispositivo
+    utils.query('UPDATE `Devices` SET `name` = ?, `description` =? , `type` = ? , `state` = ? WHERE `id` = ?', 
+    [req.body.name, req.body.description, req.body.type, req.body.state, req.params.id], function(err, rta, field) {
         if (err) {
             res.send(err).status(400);
             return;
         }
-    res.send({'valoresnuevos': rta.valoresnuevos}).status(200);
+    res.send({'changedRows': rta.changedRows}).status(200);
     });
 });
 

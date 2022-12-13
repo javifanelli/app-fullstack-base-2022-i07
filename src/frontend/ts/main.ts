@@ -8,13 +8,13 @@ class Main implements EventListenerObject, HandleResponse{
         console.log(this);
     }
    
-    cosultarDispositivos() {
-        this.framework.dispRequest("GET", "http://localhost:8000/devices",this);
+    cosultarDispositivos () {
+        this.framework.dispRequest("GET", `http://localhost:8000/devices`,this);
     }
 
-    cambiarDispositivos(name: string, desc: string, type: number, state: number, id: number) {
-        let nuevodisp = {name: name, desc: desc, type: type, state: state, id: id};
-        this.framework.cambioRequest("PUT", "http://localhost:8000/devices/${id}",this, nuevodisp);
+    cambiarDispositivos (idDis: number, name: string, desc: string, type: number, state: number) {
+        let nuevodisp = ({name: name, desc: desc, type: type, state: state});
+        this.framework.cambioRequest("PUT", `http://localhost:8000/devices/${idDis}`,this, nuevodisp);
     }
     
     cargarGrilla(listaDisp: Array<Device>) {
@@ -96,11 +96,12 @@ class Main implements EventListenerObject, HandleResponse{
         objEvento = <HTMLElement>object.target;
         if (objEvento.id == "btnenter") {
             this.cosultarDispositivos();
-        } else if (objEvento.id.startsWith("val_")) 
+            
+        } else if (objEvento.id.startsWith ("val")) 
         {
-            let disp_id: number = 1;//+(<HTMLInputElement>document.getElementById("cb")).value;
-            let disp_state: number = 0;
-            this.cambiarDispositivos("Lampara 1", "Luz living", 1, disp_state, disp_id); //Luz living
+            //let disp_id: number = +(<HTMLInputElement>document.getElementById(objEvento));
+            //let disp_state: number = 0;
+            this.cambiarDispositivos (1, "Lampara 1", "Luz living", 1, 1);
         }
     }
 }
