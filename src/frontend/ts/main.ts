@@ -1,5 +1,7 @@
 declare const M;
 
+declare var disp: number;
+
 class Main implements EventListenerObject, HandleResponse{
     private framework: Framework = new Framework();
     private personas: Array<Persona> =new Array();
@@ -10,6 +12,11 @@ class Main implements EventListenerObject, HandleResponse{
    
     cosultarDispositivos () {
         this.framework.dispRequest("GET", `http://localhost:8000/devices`,this);
+    }
+
+    cambiarEstado (idDis: number, state: number) {
+        let nuevodisp = {state: state};
+        this.framework.cambioRequest("PUT", `http://localhost:8000/devices/state/${idDis}`,this, nuevodisp);
     }
 
     cambiarDispositivos (idDis: number, name: string, desc: string, type: number, state: number) {
@@ -39,8 +46,8 @@ class Main implements EventListenerObject, HandleResponse{
             grilla += `<li class="collection-item avatar">`;
             if (disp.type == 1) {
                 grilla+=`<img src="static/images/lightbulb.png" alt=" "class="circle"> `
-                grilla += ` <span class="title negrita">${disp.name}</span>
-                <p>${disp.description}</p>
+                grilla += ` <span class="title negrita" id=${disp.name}>${disp.name}</span>
+                <p id=${disp.description}>${disp.description}</p>
                 <a class="secondary-content">
                 <div class="switch">
                 <label>
@@ -64,8 +71,8 @@ class Main implements EventListenerObject, HandleResponse{
             }
             else if (disp.type == 2){
                 grilla+=`<img src="static/images/window.png" alt=" "class="circle"> `
-                grilla += ` <span class="title negrita">${disp.name}</span>
-                <p>${disp.description}</p>
+                grilla += ` <span class="title negrita" id=${disp.name}>${disp.name}</span>
+                <p id=${disp.description}>${disp.description}</p>
                 <a class="secondary-content">
                 <form action="#">
                 <p class="range-field">`
@@ -93,14 +100,16 @@ class Main implements EventListenerObject, HandleResponse{
     handleEvent(object: Event): void {
         let objEvento: HTMLElement;
         objEvento = <HTMLElement>object.target;
+        
+        let dispstate: HTMLInputElement["value"];
+        //let dispstate = <HTMLElement>object;         
         if (objEvento.id == "btnenter") {
             this.cosultarDispositivos();
         } else if (objEvento.id.startsWith ("val_")) 
         {
-            //let disp_id = objEvento.id.toString();
-            //let disp_state: number = 0;
-            this.cambiarDispositivos (1, 'Lampara 1', 'Luz living', 1, 1);
-            this.cambiarDispositivos (2, 'Cortina 1', 'Cortina habitacion', 2, 60);
+            let dispid = parseInt (objEvento.id.replace('val_',''));
+            console.log(dispstate);
+            this.cambiarEstado (dispid, parseInt(dispstate));
         }
     }
 }
