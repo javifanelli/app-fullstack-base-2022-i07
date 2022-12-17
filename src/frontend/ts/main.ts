@@ -2,14 +2,9 @@ declare const M;
 
 declare var disp: number;
 
-class Main implements EventListenerObject, HandleResponse{
+class Main implements EventListenerObject, HandleResponse {
     private framework: Framework = new Framework();
-    private personas: Array<Persona> =new Array();
-    constructor(per:Persona) {
-        this.personas.push(per);
-        console.log(this);
-    }
-    
+        
     cosultarDispositivos () {
         this.framework.dispRequest("GET", `http://localhost:8000/devices`,this);
     }
@@ -76,7 +71,7 @@ class Main implements EventListenerObject, HandleResponse{
                 <a class="secondary-content">
                 <form action="#">
                 <p class="range-field">`
-                grilla += `<input type="range" id="val_${disp.id}" min="0" max="100" step="20" value=${disp.state} onchange = this.updateout>`;    
+                grilla += `<input type="range" id="val_${disp.id}" min="0" max="100" step="20" value=${disp.state} >`;    
                 grilla +=`</p>
                         </form>
                         </a>
@@ -94,7 +89,6 @@ class Main implements EventListenerObject, HandleResponse{
         for (let disp of listaDisp) {
             let val = document.getElementById("val_" + disp.id);
             val.addEventListener("click", this);
-            
         }
     }
 
@@ -115,13 +109,9 @@ class Main implements EventListenerObject, HandleResponse{
         }
         else if (objEvento.type == "range"){ // Lee el valor de la barra de estado (Salidas analogicas)
             dispstate = parseInt (objEvento.value);
-            //objEvento.onclick
-            }   
-        
+            }
         let dispid = parseInt (objEvento.id.replace('val_',''));
-        console.log(dispstate);
         this.cambiarEstado (dispid, dispstate);
-        //}
     }
 }
 
@@ -131,19 +121,9 @@ window.addEventListener("load", () => {
     M.updateTextFields();
     var elemsM = document.querySelectorAll('.modal');
     var instances = M.Modal.init(elemsM, "");
-    let per1 = new Persona("Matias");
-    let main: Main = new Main(per1);
-    mostrar(main);
+    let main: Main = new Main();
     let btnenter = document.getElementById("btnenter");
     btnenter.addEventListener("click", main);
-    //let valor = document.getElementById('val_'${disp.id});
-    
+    let valor = document.getElementById("range");
+    valor.addEventListener("click", main);
 });
-
-function mostrar(main: Main) {
-    //let personas = main.getPersona();
-    //let datosPersonas = "";
-    //for (let i in personas) {
-        //datosPersonas = datosPersonas + personas[i].toString();
-    //}
-}
