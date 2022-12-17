@@ -35,4 +35,20 @@ class Framework{
     }
   }
 
+  public hacerRequest(metodo: string, url: string, responseHandler:HandleResponse, petition: string) {
+    let xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = () => {
+      if (xmlHttp.readyState == 4) {
+        if (xmlHttp.status == 200) {
+          let device: Device = JSON.parse(xmlHttp.responseText);
+          responseHandler.cargarDisp(device[0], petition);
+        } else {
+          alert("ERROR en la consulta");
+        }
+      }
+    }
+    xmlHttp.open(metodo, url, true);
+    xmlHttp.send();
+  }
+
 }

@@ -1,12 +1,14 @@
 declare const M;
-
-declare var disp: number;
-
+var valsub: string;
 class Main implements EventListenerObject, HandleResponse {
     private framework: Framework = new Framework();
         
-    cosultarDispositivos () {
+    cosultainicial () {
         this.framework.dispRequest("GET", `http://localhost:8000/devices`,this);
+    }
+    
+    consultaDisp(idDis: number, petition: string){
+        return this.framework.hacerRequest("GET", `http://localhost:8000/devices/${idDis}`,this, petition);
     }
 
     cambiarEstado (idDis: number, state: number) {
@@ -87,9 +89,10 @@ class Main implements EventListenerObject, HandleResponse {
         grilla += `</ul>`;
         cajaDips.innerHTML = grilla;
         for (let disp of listaDisp) {
-            let val = document.getElementById("val_" + disp.id);
-            val.addEventListener("click", this);
-        }
+            document.getElementById("val_" + disp.id).addEventListener("click", this);
+            document.getElementById("btnmod" + disp.id).addEventListener("click", this);
+            document.getElementById("btnsub" + disp.id).addEventListener("click", this);
+            }
     }
 
     openModal(mode: string) {
@@ -110,7 +113,7 @@ class Main implements EventListenerObject, HandleResponse {
         console.log (objEvento);
         let dispstate: number;
         if (objEvento.id == "btnenter") {
-            this.cosultarDispositivos();
+            this.cosultainicial();
         } 
         else if (objEvento.type == "checkbox") { // Lee el valor del checkbox (salidas On-Off)
             if (objEvento.checked == true){
@@ -126,9 +129,27 @@ class Main implements EventListenerObject, HandleResponse {
             let dispid = parseInt (objEvento.id.replace('val_',''));
             this.cambiarEstado (dispid, dispstate);    
         }
-        else if (objEvento.id.startsWith("btnsub")) {
-            
+        else if (objEvento.id.startsWith("btnmod")) {
+            let dispid: number = parseInt (objEvento.id);
+            this.consultaDisp(dispid, "delete");
+            this.openModal("modalmod");
+
         }
+        else if (objEvento.id.startsWith("btnsub")) {
+            let dispid: number = parseInt (objEvento.id);
+            this.consultaDisp(dispid, "delete");
+            this.openModal("modaldel");
+
+        }
+        else if (objEvento.id == "btnadd") {
+            let dispid: number = parseInt (objEvento.id);
+            this.consultaDisp(dispid, "add");
+            this.openModal("modaladd");
+  
+        }
+        //else if (objEvento.id == "cancedita") {
+            //this.closeModal("modaledit");
+        //}
     }
 }
 
@@ -138,8 +159,16 @@ window.addEventListener("load", () => {
     var instances = M.FormSelect.init(elems, "");
     var elemsM = document.querySelectorAll('.modal');
     M.Modal.init(elemsM, "");
-    let btnenter = document.getElementById("btnenter");
-    btnenter.addEventListener("click", main);
-    //let valor = document.getElementById("range");
-    //valor.addEventListener("click", main);
+    
+    // Leer botones principales
+    document.getElementById("btnenter").addEventListener("click", main);
+    document.getElementById("btnadd").addEventListener("click", main);
+    
+    // Leer botones del modal
+    document.getElementById("confborra").addEventListener("click", main);
+    document.getElementById("cancborra").addEventListener("click", main);
+    document.getElementById("confagrega").addEventListener("click", main);
+    document.getElementById("cancagrega").addEventListener("click", main);
+    document.getElementById("confedita").addEventListener("click", main);
+    document.getElementById("cancedita").addEventListener("click", main);
 });
