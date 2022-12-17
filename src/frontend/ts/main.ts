@@ -124,6 +124,6 @@ window.addEventListener("load", () => {
     let main: Main = new Main();
     let btnenter = document.getElementById("btnenter");
     btnenter.addEventListener("click", main);
-    let valor = document.getElementById("range");
-    valor.addEventListener("click", main);
+    //let valor = document.getElementById("range");
+    //valor.addEventListener("click", main);
 });
