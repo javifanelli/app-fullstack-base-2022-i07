@@ -9,7 +9,7 @@ class Main implements EventListenerObject, HandleResponse{
         this.personas.push(per);
         console.log(this);
     }
-   
+    
     cosultarDispositivos () {
         this.framework.dispRequest("GET", `http://localhost:8000/devices`,this);
     }
@@ -53,9 +53,9 @@ class Main implements EventListenerObject, HandleResponse{
                 <label>
                 Off`;
                 if (disp.state) {
-                    grilla += `<input id="val_${disp.id}" miAtt="mi dato 1" type="checkbox" checked>`;    
+                    grilla += `<input id="val_${disp.id}"  type="checkbox" checked>`;    
                 } else {
-                    grilla += `<input id="val_${disp.id}" miAtt="mi dato 2" type="checkbox">`;    
+                    grilla += `<input id="val_${disp.id}"  type="checkbox">`;    
                 }
                 grilla +=`<span class="lever"></span>
                         On
@@ -76,7 +76,7 @@ class Main implements EventListenerObject, HandleResponse{
                 <a class="secondary-content">
                 <form action="#">
                 <p class="range-field">`
-                grilla += `<input type="range" id="val_${disp.id}" min="0" max="100" step="20" value=${disp.state}>`;    
+                grilla += `<input type="range" id="val_${disp.id}" min="0" max="100" step="20" value=${disp.state} onchange = this.updateout>`;    
                 grilla +=`</p>
                         </form>
                         </a>
@@ -94,23 +94,34 @@ class Main implements EventListenerObject, HandleResponse{
         for (let disp of listaDisp) {
             let val = document.getElementById("val_" + disp.id);
             val.addEventListener("click", this);
+            
         }
     }
 
     handleEvent(object: Event): void {
-        let objEvento: HTMLElement;
-        objEvento = <HTMLElement>object.target;
-        
-        let dispstate: HTMLInputElement["value"];
-        //let dispstate = <HTMLElement>object;         
+        let objEvento: HTMLInputElement;
+        objEvento = <HTMLInputElement>object.target;
+        console.log (objEvento);
+        let dispstate: number;
         if (objEvento.id == "btnenter") {
             this.cosultarDispositivos();
-        } else if (objEvento.id.startsWith ("val_")) 
-        {
-            let dispid = parseInt (objEvento.id.replace('val_',''));
-            console.log(dispstate);
-            this.cambiarEstado (dispid, parseInt(dispstate));
+        } 
+        else if (objEvento.type == "checkbox") { // Lee el valor del checkbox (salidas On-Off)
+            if (objEvento.checked == true){
+                dispstate=1;
+            } else {
+                dispstate=0;
+            }
         }
+        else if (objEvento.type == "range"){ // Lee el valor de la barra de estado (Salidas analogicas)
+            dispstate = parseInt (objEvento.value);
+            //objEvento.onclick
+            }   
+        
+        let dispid = parseInt (objEvento.id.replace('val_',''));
+        console.log(dispstate);
+        this.cambiarEstado (dispid, dispstate);
+        //}
     }
 }
 
@@ -123,8 +134,10 @@ window.addEventListener("load", () => {
     let per1 = new Persona("Matias");
     let main: Main = new Main(per1);
     mostrar(main);
-    let btn = document.getElementById("btnenter");
-    btn.addEventListener("click", main);
+    let btnenter = document.getElementById("btnenter");
+    btnenter.addEventListener("click", main);
+    //let valor = document.getElementById('val_'${disp.id});
+    
 });
 
 function mostrar(main: Main) {
