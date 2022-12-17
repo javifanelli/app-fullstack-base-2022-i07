@@ -25,6 +25,13 @@ class Main implements EventListenerObject, HandleResponse {
         this.framework.borraRequest("DELETE", `http://localhost:8000/devices/${idDis}`,this);
     }
 
+    refrescarSPA(idModal: string){
+        this.cosultainicial();
+        let modal = document.getElementById(idModal);
+        let instanceModal = M.Modal.getInstance(modal);
+        instanceModal.close();
+    }
+
     cargarGrilla(listaDisp: Array<Device>) {
         let cajaDips = document.getElementById("cajaDisp");
         let grilla:string = `<ul class="collection">`;
@@ -67,7 +74,7 @@ class Main implements EventListenerObject, HandleResponse {
                         <button class="btn waves-effect waves-light button-view" id="btnmod${disp.id}" 
                         name="hello_button">Modificar</button>
                         <button class="btn waves-effect waves-light button-view" id="btnsub${disp.id}" 
-                        name="hello_button">Quitar</button>
+                        name="hello_button">Borrar</button>
                         </li>`;   
             }
             else if (disp.type == 2){
@@ -85,7 +92,7 @@ class Main implements EventListenerObject, HandleResponse {
                         <button class="btn waves-effect waves-light button-view" id="btnmod${disp.id}" 
                         name="hello_button">Modificar</button>
                         <button class="btn waves-effect waves-light button-view" id="btnsub${disp.id}" 
-                        name="hello_button">Quitar</button>
+                        name="hello_button">Borrar</button>
                         </li>`;  
             }
         }
@@ -128,13 +135,6 @@ class Main implements EventListenerObject, HandleResponse {
     closeModal(mode: string) {
         let modal = document.getElementById(mode)
         var instanceModal = M.Modal.getInstance(modal);
-        instanceModal.close();
-    }
-    
-    refrescarSPA(idModal: string){
-        this.cosultainicial();
-        let modal = document.getElementById(idModal);
-        let instanceModal = M.Modal.getInstance(modal);
         instanceModal.close();
     }
     
