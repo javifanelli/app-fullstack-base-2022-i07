@@ -7,13 +7,13 @@ class Main implements EventListenerObject, HandleResponse {
         this.framework.dispRequest("GET", `http://localhost:8000/devices`,this);
     }
     
-    consultaDisp(idDis: number, petition: string){
-        return this.framework.hacerRequest("GET", `http://localhost:8000/devices/${idDis}`,this, petition);
+    consultaDisp(idDis: number, action: string){
+        return this.framework.hacerRequest("GET", `http://localhost:8000/devices/${idDis}`,this, action);
     }
 
     cambiarEstado (idDis: number, state: number) {
         let nuevodisp = {state: state};
-        this.framework.cambioRequest("PUT", `http://localhost:8000/devices/state/${idDis}`,this, nuevodisp);
+        this.framework.cambioRequest("PUT", `http://localhost:8000/devices/${idDis}`,this, nuevodisp);
     }
 
     cambiarDispositivos (idDis: number, name: string, desc: string, type: number, state: number) {
@@ -21,6 +21,10 @@ class Main implements EventListenerObject, HandleResponse {
         this.framework.cambioRequest("PUT", `http://localhost:8000/devices/${idDis}`,this, nuevodisp);
     }
     
+    borrarDispositivo (idDis: number) {
+        this.framework.borraRequest("DELETE", `http://localhost:8000/devices/${idDis}`,this);
+    }
+
     cargarGrilla(listaDisp: Array<Device>) {
         let cajaDips = document.getElementById("cajaDisp");
         let grilla:string = `<ul class="collection">`;
@@ -95,6 +99,26 @@ class Main implements EventListenerObject, HandleResponse {
             }
     }
 
+    cargarDisp(device: Device, action: string){
+        if(action == "edit"){
+            (<HTMLInputElement>document.getElementById("edit-id-disp")).value = device.id.toString();
+            (<HTMLInputElement>document.getElementById("edit-name")).value = device.name;
+            (<HTMLInputElement>document.getElementById("edit-description")).value = device.description;
+            (<HTMLInputElement>document.getElementById("edit-status")).checked = device.state;
+
+            let select = document.getElementById("select-edit-type");
+            var instanceSelect = M.FormSelect.getInstance(select);
+            (<HTMLInputElement>select).value = device.type.toString();
+            instanceSelect.destroy();
+            M.FormSelect.init(select, "");
+        
+        } else if(action == "delete"){
+            document.getElementById("id-borrar").innerHTML = device.id.toString();
+            document.getElementById("nombre-borrar").innerHTML = device.name;
+            (<HTMLInputElement>document.getElementById("input-id-borrar")).value = device.id.toString();
+        }
+    }
+
     openModal(mode: string) {
         let modal = document.getElementById(mode)
         var instanceModal = M.Modal.getInstance(modal);
@@ -104,6 +128,13 @@ class Main implements EventListenerObject, HandleResponse {
     closeModal(mode: string) {
         let modal = document.getElementById(mode)
         var instanceModal = M.Modal.getInstance(modal);
+        instanceModal.close();
+    }
+    
+    refrescarSPA(idModal: string){
+        this.cosultainicial();
+        let modal = document.getElementById(idModal);
+        let instanceModal = M.Modal.getInstance(modal);
         instanceModal.close();
     }
     
@@ -147,9 +178,22 @@ class Main implements EventListenerObject, HandleResponse {
             this.openModal("modaladd");
   
         }
-        //else if (objEvento.id == "cancedita") {
-            //this.closeModal("modaledit");
-        //}
+        else if (objEvento.id == "cancedita") {
+            this.closeModal("modalmod");
+        }
+        
+        else if (objEvento.id == "confborra") {
+            let dispid: number = +(<HTMLInputElement>document.getElementById("input-id-borrar")).value;
+            this.borrarDispositivo(dispid);
+            this.refrescarSPA("modaldel");
+        }
+            else if (objEvento.id == "cancborra") {
+            this.closeModal("modaldel");
+        }
+        
+        else if (objEvento.id == "cancagrega") {
+            this.closeModal("modaladd");
+        }
     }
 }
 

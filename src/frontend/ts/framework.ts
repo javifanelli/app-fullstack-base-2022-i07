@@ -51,4 +51,19 @@ class Framework{
     xmlHttp.send();
   }
 
+  public borraRequest(metodo: string, url: string, responseHandler:HandleResponse) {
+    let xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = () => {
+      if (xmlHttp.readyState == 4) {
+        if (xmlHttp.status == 200) {
+          console.log(xmlHttp.responseText);
+        } else {
+          alert("ERROR en la consulta");
+        }
+      }
+    }
+    xmlHttp.open(metodo, url, true);
+    xmlHttp.send();
+  }
+
 }

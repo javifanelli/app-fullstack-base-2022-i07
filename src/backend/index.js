@@ -31,7 +31,7 @@ app.get('/devices/:id', function(req, res, next) { // Consultar de a 1 los dispo
     );
 });
 
-app.put('/devices/state/:id', function(req, res, next) { // Actualizar el dispositivo
+app.put('/devices/:id', function(req, res, next) { // Actualizar el dispositivo
     utils.query('UPDATE `Devices` SET `state` = ? WHERE `id` = ?', 
     [req.body.state, req.params.id], function(err, rta, field) {
         if (err) {
@@ -51,6 +51,18 @@ app.put('/devices/:id', function(req, res, next) { // Actualizar el dispositivo
         }
     res.send({'changedRows': rta.changedRows}).status(200);
     });
+});
+
+app.delete('/devices/:id', function(req, res, next) { // Borar el dispositivo
+    utils.query('DELETE FROM Devices WHERE id = ?',req.params.id,
+        function(err, rta, field) {
+            if (err) {
+                res.send(err).status(400);
+                return;
+            }
+            res.send("deleted").status(200);
+        }
+    );
 });
 
 app.listen(PORT, function(req, res) {
