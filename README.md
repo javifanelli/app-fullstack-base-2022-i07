@@ -155,6 +155,9 @@ En la siguiente ilustración podés ver cómo está organizado el proyecto para 
 En esta sección podés ver los detalles específicos de funcionamiento del código y que son los siguientes.
 
 <details><summary><b>Mira los detalles de implementación</b></summary><br>
+### Ingreso
+
+Se colocó un campo de nombre en el saludo principal. Por el momento solo dice "Hola"+nombre, la idea es que en un futuro sirva para un logueo por usuario.
 
 ### Agregar un dispositivo
 
@@ -162,7 +165,7 @@ Se colocaron los botones de "AGREGAR" y "QUITAR", aunque todavía no están impl
 
 ### Frontend
 
-El frontend se armó en base a la maqueta que el profesor fue haciendo en clase y se fue modificando a necesidad. Sigue en desarrollo.
+El frontend se armó en base a la maqueta que el profesor fue haciendo en clase y se fue modificando a necesidad. La app fucniona en una SPA, enviando los estados al servidor y almacenándolos en la base de datos ante cualquier cambio. Seguirá en desarrollo.
 
 ### Backend
 
