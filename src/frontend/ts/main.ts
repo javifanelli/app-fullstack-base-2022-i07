@@ -42,7 +42,7 @@ class Main implements EventListenerObject, HandleResponse {
             if (disp.type == 1) {
                 grilla+=`<img src="static/images/lightbulb.png" alt=" "class="circle"> `
                 grilla += ` <span class="title negrita" id=${disp.name}>${disp.name}</span>
-                <p id=${disp.description}>${disp.description}</p>
+                <p>${disp.description}</p>
                 <a class="secondary-content">
                 <div class="switch">
                 <label>
@@ -67,7 +67,7 @@ class Main implements EventListenerObject, HandleResponse {
             else if (disp.type == 2){
                 grilla+=`<img src="static/images/window.png" alt=" "class="circle"> `
                 grilla += ` <span class="title negrita" id=${disp.name}>${disp.name}</span>
-                <p id=${disp.description}>${disp.description}</p>
+                <p>${disp.description}</p>
                 <a class="secondary-content">
                 <form action="#">
                 <p class="range-field">`
@@ -92,6 +92,18 @@ class Main implements EventListenerObject, HandleResponse {
         }
     }
 
+    openModal(mode: string) {
+        let modal = document.getElementById(mode)
+        var instanceModal = M.Modal.getInstance(modal);
+        instanceModal.open();
+    }
+
+    closeModal(mode: string) {
+        let modal = document.getElementById(mode)
+        var instanceModal = M.Modal.getInstance(modal);
+        instanceModal.close();
+    }
+    
     handleEvent(object: Event): void {
         let objEvento: HTMLInputElement;
         objEvento = <HTMLInputElement>object.target;
@@ -106,22 +118,26 @@ class Main implements EventListenerObject, HandleResponse {
             } else {
                 dispstate=0;
             }
+            let dispid = parseInt (objEvento.id.replace('val_',''));
+            this.cambiarEstado (dispid, dispstate);
         }
         else if (objEvento.type == "range"){ // Lee el valor de la barra de estado (Salidas analogicas)
             dispstate = parseInt (objEvento.value);
-            }
-        let dispid = parseInt (objEvento.id.replace('val_',''));
-        this.cambiarEstado (dispid, dispstate);
+            let dispid = parseInt (objEvento.id.replace('val_',''));
+            this.cambiarEstado (dispid, dispstate);    
+        }
+        else if (objEvento.id.startsWith("btnsub")) {
+            
+        }
     }
 }
 
 window.addEventListener("load", () => {
+    let main: Main = new Main();
     var elems = document.querySelectorAll('select');
     var instances = M.FormSelect.init(elems, "");
-    M.updateTextFields();
     var elemsM = document.querySelectorAll('.modal');
-    var instances = M.Modal.init(elemsM, "");
-    let main: Main = new Main();
+    M.Modal.init(elemsM, "");
     let btnenter = document.getElementById("btnenter");
     btnenter.addEventListener("click", main);
     //let valor = document.getElementById("range");
