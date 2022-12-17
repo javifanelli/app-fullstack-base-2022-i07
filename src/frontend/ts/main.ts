@@ -96,7 +96,6 @@ class Main implements EventListenerObject, HandleResponse {
                         </li>`;  
             }
         }
-        
         grilla += `</ul>`;
         cajaDips.innerHTML = grilla;
         for (let disp of listaDisp) {
