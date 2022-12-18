@@ -158,7 +158,7 @@ En esta sección podés ver los detalles específicos de funcionamiento del cód
 
 ### Saludo inicial
 
-Se colocó un campo de nombre en el saludo principal. Por el momento solo dice "Hola"+nombre, la idea es que en un futuro sirva para un logueo por usuario.
+Se colocó un campo de nombre en el saludo principal. Por el momento solo dice "Hola"+nombre, la idea es que en un futuro sirva para un logueo por usuario. Se agregaron los links para volver al inicio sobre el nombre de la página arriba a la izquierda, el HELP que tiene un link a este README, y las redes sociales personales mías.
 
 ### Modificar el estado del dispositivo
 
