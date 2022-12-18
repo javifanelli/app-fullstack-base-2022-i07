@@ -4,25 +4,25 @@ class Main implements EventListenerObject, HandleResponse {
     private framework: Framework = new Framework();
         
     cosultainicial () {
-        this.framework.dispRequest("GET", `http://localhost:8000/devices`,this);
+        this.framework.dispRequest("GET", `http://localhost:8000/devices`, this);
     }
     
     consultaDisp(idDis: number, action: string){
-        return this.framework.hacerRequest("GET", `http://localhost:8000/devices/${idDis}`,this, action);
+        return this.framework.hacerRequest("GET", `http://localhost:8000/devices/${idDis}`, this, action);
     }
 
     cambiarEstado (idDis: number, state: number) {
         let nuevodisp = {state: state};
-        this.framework.cambioRequest("PUT", `http://localhost:8000/devices/${idDis}`,this, nuevodisp);
+        this.framework.cambioRequest("PUT", `http://localhost:8000/devices/${idDis}`, this, nuevodisp);
     }
 
     cambiarDispositivos (idDis: number, name: string, desc: string, type: number, state: number) {
         let nuevodisp = {name: name, description: desc, type: type, state: state};
-        this.framework.cambioRequest("PUT", `http://localhost:8000/devices/${idDis}`,this, nuevodisp);
+        this.framework.cambioRequest("PUT", `http://localhost:8000/devices/${idDis}`, this, nuevodisp);
     }
     
     borrarDispositivo (idDis: number) {
-        this.framework.borraRequest("DELETE", `http://localhost:8000/devices/${idDis}`,this);
+        this.framework.borraRequest("DELETE", `http://localhost:8000/devices/${idDis}`, this);
     }
 
     refrescarSPA(idModal: string){
@@ -99,9 +99,9 @@ class Main implements EventListenerObject, HandleResponse {
         grilla += `</ul>`;
         cajaDips.innerHTML = grilla;
         for (let disp of listaDisp) {
-            document.getElementById("val_" + disp.id).addEventListener("click", this);
-            document.getElementById("btnmod" + disp.id).addEventListener("click", this);
-            document.getElementById("btnsub" + disp.id).addEventListener("click", this);
+            document.getElementById("val_"+disp.id).addEventListener("click", this);
+            document.getElementById("btnmod"+disp.id).addEventListener("click", this);
+            document.getElementById("btnsub"+disp.id).addEventListener("click", this);
             }
     }
 
@@ -110,7 +110,6 @@ class Main implements EventListenerObject, HandleResponse {
             (<HTMLInputElement>document.getElementById("edit-id-disp")).value = device.id.toString();
             (<HTMLInputElement>document.getElementById("edit-name")).value = device.name;
             (<HTMLInputElement>document.getElementById("edit-description")).value = device.description;
-            (<HTMLInputElement>document.getElementById("edit-status")).checked = device.state;
 
             let select = document.getElementById("select-edit-type");
             var instanceSelect = M.FormSelect.getInstance(select);
@@ -121,6 +120,7 @@ class Main implements EventListenerObject, HandleResponse {
         } else if(action == "delete"){
             document.getElementById("id-borrar").innerHTML = device.id.toString();
             document.getElementById("nombre-borrar").innerHTML = device.name;
+            document.getElementById("desc-borrar").innerHTML = device.description;
             (<HTMLInputElement>document.getElementById("input-id-borrar")).value = device.id.toString();
         }
     }
@@ -160,13 +160,14 @@ class Main implements EventListenerObject, HandleResponse {
             this.cambiarEstado (dispid, dispstate);    
         }
         else if (objEvento.id.startsWith("btnmod")) {
-            let dispid: number = parseInt (objEvento.id);
-            this.consultaDisp(dispid, "delete");
+            let dispid: number = parseInt (objEvento.id.replace('btnmod',''));
+            this.consultaDisp(dispid, "edit");
             this.openModal("modalmod");
 
         }
         else if (objEvento.id.startsWith("btnsub")) {
-            let dispid: number = parseInt (objEvento.id);
+            let dispid: number = parseInt (objEvento.id.replace('btnsub',''));
+            console.log("El id es"+dispid);
             this.consultaDisp(dispid, "delete");
             this.openModal("modaldel");
 

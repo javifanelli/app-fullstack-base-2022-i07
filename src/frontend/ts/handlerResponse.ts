@@ -1,4 +1,4 @@
 interface HandleResponse {
   cargarGrilla(listaDisp: Array<Device>);
-  cargarDisp(device: Device, petition: string);
+  cargarDisp(device: Device, action: string);
 }

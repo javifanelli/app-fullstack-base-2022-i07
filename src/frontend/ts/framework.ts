@@ -35,13 +35,13 @@ class Framework{
     }
   }
 
-  public hacerRequest(metodo: string, url: string, responseHandler:HandleResponse, petition: string) {
+  public hacerRequest(metodo: string, url: string, responseHandler:HandleResponse, action: string) {
     let xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = () => {
       if (xmlHttp.readyState == 4) {
         if (xmlHttp.status == 200) {
           let device: Device = JSON.parse(xmlHttp.responseText);
-          responseHandler.cargarDisp(device[0], petition);
+          responseHandler.cargarDisp(device[0], action);
         } else {
           alert("ERROR en la consulta");
         }
