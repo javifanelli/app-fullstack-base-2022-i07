@@ -16,8 +16,8 @@ class Main implements EventListenerObject, HandleResponse {
         this.framework.cambioRequest("PUT", `http://localhost:8000/devices/${idDis}`, this, nuevodisp);
     }
 
-    cambiarDispositivos (idDis: number, name: string, desc: string, type: number, state: number) {
-        let nuevodisp = {name: name, description: desc, type: type, state: state};
+    cambiarDispositivos (idDis: number, name: string, desc: string, type: number) {
+        let nuevodisp = {name: name, description: desc, type: type};
         this.framework.cambioRequest("PUT", `http://localhost:8000/devices/${idDis}`, this, nuevodisp);
     }
     
@@ -167,7 +167,6 @@ class Main implements EventListenerObject, HandleResponse {
         }
         else if (objEvento.id.startsWith("btnsub")) {
             let dispid: number = parseInt (objEvento.id.replace('btnsub',''));
-            console.log("El id es"+dispid);
             this.consultaDisp(dispid, "delete");
             this.openModal("modaldel");
 
@@ -182,6 +181,18 @@ class Main implements EventListenerObject, HandleResponse {
             this.closeModal("modalmod");
         }
         
+        else if (objEvento.id == "confedita") {
+            let dispid: number = +(<HTMLInputElement>document.getElementById("edit-id-disp")).value;
+            let name = (<HTMLInputElement>document.getElementById("edit-name")).value;
+            let description = (<HTMLInputElement>document.getElementById("edit-description")).value;
+            let type = parseInt ((<HTMLInputElement>document.getElementById("select-edit-type")).value);
+            if(dispid && name && description && type) {
+                this.cambiarDispositivos(dispid, name, description, type);
+                this.refrescarSPA("modaledit");
+            } else {
+                alert("complete todos los campos");
+            }
+        }
         else if (objEvento.id == "confborra") {
             let dispid: number = +(<HTMLInputElement>document.getElementById("input-id-borrar")).value;
             this.borrarDispositivo(dispid);

@@ -154,14 +154,23 @@ En la siguiente ilustración podés ver cómo está organizado el proyecto para 
 
 En esta sección podés ver los detalles específicos de funcionamiento del código y que son los siguientes.
 
-<details><summary><b>Mira los detalles de implementación</b></summary><br>
-### Ingreso
+<details><summary><b>Mira los detalles de implementación</b></summary>
+
+### Saludo inicial
 
 Se colocó un campo de nombre en el saludo principal. Por el momento solo dice "Hola"+nombre, la idea es que en un futuro sirva para un logueo por usuario.
 
+### Modificar el estado del dispositivo
+
+Hay 2 tipos de dispositivos: tipo 1, que son lámparas ON-OFF, que pueden tener 2 estados, y están representados con un botón (checkbox), y tipo 2 que son cortinas, que pueden tener estados de 0% a 100%, y están representados por una barra. Para cambiar el estado, hay que hacer click sobre el comando correspondiente y llevarlo al valor deseado. Si es un botón, sólo hacer click, y si es una barra, deslizarla hasta el valor que se desee.
+
 ### Agregar un dispositivo
 
-Se colocaron los botones de "AGREGAR" y "QUITAR", aunque todavía no están implementadas las funciones.
+Para agregar un dispositivo, sólo hay que hacer click en el botón "AGREGAR" al final de la página y completar los campos. De esta manera, se actualizan los valores en la base de datos y en el frontend.
+
+### Borrar un dispositivo
+
+Para borrar un dispositivo, sólo hay que hacer click en el botón "BORRAR" que corresponda al dispositivo que se desee borrar y lo borra de la base de datos y del frontend.
 
 ### Frontend
 
