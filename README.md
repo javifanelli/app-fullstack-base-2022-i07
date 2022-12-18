@@ -167,19 +167,23 @@ Hay 2 tipos de dispositivos: tipo 1, que son lámparas ON-OFF, que pueden tener 
 
 ### Agregar un dispositivo
 
-Para agregar un dispositivo, sólo hay que hacer click en el botón "AGREGAR" al final de la página y completar los campos. De esta manera, se actualizan los valores en la base de datos y en el frontend.
+Para agregar un dispositivo, sólo hay que hacer click en el botón "AGREGAR" al final de la página y completar los campos. Aparecerá un modal donde se deben completar todos los datos necesarios para identificar un dispositivo (nombre, descripción y tipo). De esta manera, se crea el dispositivo creando los valores en la base de datos y en el frontend.
 
 ### Borrar un dispositivo
 
-Para borrar un dispositivo, sólo hay que hacer click en el botón "BORRAR" que corresponda al dispositivo que se desee borrar y lo borra de la base de datos y del frontend.
+Para borrar un dispositivo, sólo hay que hacer click en el botón "BORRAR" que corresponda al dispositivo que se desee borrar. Aparecerá un modeal de confirmación y si se elige "SI", lo borrará de la base de datos y del frontend.
+
+### Modificar un dispositivo
+
+Para modificar un dispositivo, sólo hay que hacer click en el botón "MODIFICAR" al final de la página y cambiar los campos que se deseen. Aparecerá un modal con los campos  nombre, descripción y tipo. De esta manera, se pueden modificar los valores en la base de datos y en el frontend.
 
 ### Frontend
 
-El frontend se armó en base a la maqueta que el profesor fue haciendo en clase y se fue modificando a necesidad. La app fucniona en una SPA, enviando los estados al servidor y almacenándolos en la base de datos ante cualquier cambio. Seguirá en desarrollo.
+El frontend se armó en base a la maqueta que el profesor fue haciendo en clase y se fue modificando a necesidad. La app fucniona en una SPA, enviando los estados al servidor y almacenándolos en la base de datos ante cualquier cambio. Todos los datos de los dispositivos (id, nombe, descripción, tipo y estado) se almacenan en la base de datos.
 
 ### Backend
 
-Completá todos los detalles de funcionamiento sobre el backend, sus interacciones con el cliente web, la base de datos, etc.
+El backend básicamente lo que hace es recibir los datos en formato JSON. Los convierte y hace las consultas y escrituras en la base de datos.
 
 <details><summary><b>Ver los endpoints disponibles</b></summary><br>
 
