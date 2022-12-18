@@ -163,6 +163,7 @@ Se colocó un campo de nombre en el saludo principal. Por el momento solo dice "
 ### Modificar el estado del dispositivo
 
 Hay 2 tipos de dispositivos: tipo 1, que son lámparas ON-OFF, que pueden tener 2 estados, y están representados con un botón (checkbox), y tipo 2 que son cortinas, que pueden tener estados de 0% a 100%, y están representados por una barra. Para cambiar el estado, hay que hacer click sobre el comando correspondiente y llevarlo al valor deseado. Si es un botón, sólo hacer click, y si es una barra, deslizarla hasta el valor que se desee.
+<b>NOTA: </b>Si se abre la consola en el frontend y se desean ver las interacciones y mensajes, no se envía el nuevo estado de la barra de los dispositivos 0-100%. Desconozco el motivo.
 
 ### Agregar un dispositivo
 
