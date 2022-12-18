@@ -31,7 +31,7 @@ app.get('/devices/:id', function(req, res, next) { // Consultar de a 1 los dispo
     );
 });
 
-app.put('/devices/:id', function(req, res, next) { // Actualizar el dispositivo
+app.put('/devices/state/:id', function(req, res, next) { // Actualizar el dispositivo
     utils.query('UPDATE `Devices` SET `state` = ? WHERE `id` = ?', 
     [req.body.state, req.params.id], function(err, rta, field) {
         if (err) {
@@ -43,8 +43,8 @@ app.put('/devices/:id', function(req, res, next) { // Actualizar el dispositivo
 });
 
 app.put('/devices/:id', function(req, res, next) { // Actualizar el dispositivo
-    utils.query('UPDATE `Devices` SET `name` = ?, `description` =? , WHERE `id` = ?', 
-    [req.body.name, req.body.description, req.params.id], function(err, rta, field) {
+    utils.query('UPDATE `Devices` SET `name` = ?, `description` = ? , `type` = ? WHERE `id` = ?', 
+    [req.body.name, req.body.description, req.params.type, req.params.id], function(err, rta, field) {
         if (err) {
             res.send(err).status(400);
             return;

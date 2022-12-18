@@ -13,11 +13,11 @@ class Main implements EventListenerObject, HandleResponse {
 
     cambiarEstado (idDis: number, state: number) {
         let nuevodisp = {state: state};
-        this.framework.cambioRequest("PUT", `http://localhost:8000/devices/${idDis}`, this, nuevodisp);
+        this.framework.cambioRequest("PUT", `http://localhost:8000/devices/state/${idDis}`, this, nuevodisp);
     }
 
-    cambiarDispositivos (idDis: number, name: string, desc: string, type: number) {
-        let nuevodisp = {name: name, description: desc, type: type};
+    cambiarDispositivos (idDis: number, name: string, description: string, type: number) {
+        let nuevodisp = {name: name, description: description, type: type};
         this.framework.cambioRequest("PUT", `http://localhost:8000/devices/${idDis}`, this, nuevodisp);
     }
     
@@ -185,10 +185,11 @@ class Main implements EventListenerObject, HandleResponse {
             let dispid: number = +(<HTMLInputElement>document.getElementById("edit-id-disp")).value;
             let name = (<HTMLInputElement>document.getElementById("edit-name")).value;
             let description = (<HTMLInputElement>document.getElementById("edit-description")).value;
-            let type = parseInt ((<HTMLInputElement>document.getElementById("select-edit-type")).value);
+            let type = parseInt((<HTMLInputElement>document.getElementById("select-edit-type")).value);
             if(dispid && name && description && type) {
                 this.cambiarDispositivos(dispid, name, description, type);
-                this.refrescarSPA("modaledit");
+                alert("Dispositivo modificado");
+                this.refrescarSPA("modalmod");
             } else {
                 alert("complete todos los campos");
             }
