@@ -196,7 +196,7 @@ class Main implements EventListenerObject, HandleResponse {
         else if (objEvento.id == "confborra") {
             let dispid: number = +(<HTMLInputElement>document.getElementById("input-id-borrar")).value;
             this.borrarDispositivo(dispid);
-            alert("Dispositivo borrado");
+            alert("Dispositivo eliminado");
             this.refrescarSPA("modaldel");
         }
             else if (objEvento.id == "cancborra") {
