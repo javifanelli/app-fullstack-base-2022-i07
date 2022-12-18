@@ -22,7 +22,7 @@ class Framework{
     xmlHttp.onreadystatechange = () => {
       if (xmlHttp.readyState == 4) {
           if (xmlHttp.status == 200) {
-            console.log(xmlHttp.responseText);  
+            console.log(xmlHttp.responseText); 
             } else {
                 alert("ERROR en la consulta");
             }
@@ -65,5 +65,24 @@ class Framework{
     xmlHttp.open(metodo, url, true);
     xmlHttp.send();
   }
+
+  public agregarRequest(metodo: string, url: string, responseHandler:HandleResponse, data: any) {
+    let xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = () => {
+      if (xmlHttp.readyState == 4) {
+        if (xmlHttp.status == 200) {
+          console.log(xmlHttp.responseText);
+        } else {
+          alert("ERROR en la consulta");
+        }
+      }
+    }
+    xmlHttp.open(metodo, url, true);
+    if (data != undefined) {
+      xmlHttp.setRequestHeader("Content-Type", "application/json");  
+      xmlHttp.send(JSON.stringify(data));
+    }
+  }
+
 
 }

@@ -1,5 +1,5 @@
 declare const M;
-var valsub: string;
+
 class Main implements EventListenerObject, HandleResponse {
     private framework: Framework = new Framework();
         
@@ -7,7 +7,7 @@ class Main implements EventListenerObject, HandleResponse {
         this.framework.dispRequest("GET", `http://localhost:8000/devices`, this);
     }
     
-    consultaDisp(idDis: number, action: string){
+    consultaDisp(idDis: number, action: string) {
         return this.framework.hacerRequest("GET", `http://localhost:8000/devices/${idDis}`, this, action);
     }
 
@@ -25,9 +25,14 @@ class Main implements EventListenerObject, HandleResponse {
         this.framework.borraRequest("DELETE", `http://localhost:8000/devices/${idDis}`, this);
     }
 
-    refrescarSPA(idModal: string){
+    agregarDispositivo (name: string, description: string, type: string) {
+        let newDevice = { name: name, description: description,  type: type, state: 0};
+        this.framework.agregarRequest("POST", `http://localhost:8000/devices`, this, newDevice);
+    }
+
+    refrescarSPA(tipoModal: string){
         this.cosultainicial();
-        let modal = document.getElementById(idModal);
+        let modal = document.getElementById(tipoModal);
         let instanceModal = M.Modal.getInstance(modal);
         instanceModal.close();
     }
@@ -103,9 +108,9 @@ class Main implements EventListenerObject, HandleResponse {
             document.getElementById("btnmod"+disp.id).addEventListener("click", this);
             document.getElementById("btnsub"+disp.id).addEventListener("click", this);
             }
-    }
+        }
 
-    cargarDisp(device: Device, action: string){
+    cargarDisp(device: Device, action: string) {
         if(action == "edit"){
             (<HTMLInputElement>document.getElementById("edit-id-disp")).value = device.id.toString();
             (<HTMLInputElement>document.getElementById("edit-name")).value = device.name;
@@ -116,7 +121,6 @@ class Main implements EventListenerObject, HandleResponse {
             (<HTMLInputElement>select).value = device.type.toString();
             instanceSelect.destroy();
             M.FormSelect.init(select, "");
-        
         } else if(action == "delete"){
             document.getElementById("id-borrar").innerHTML = device.id.toString();
             document.getElementById("nombre-borrar").innerHTML = device.name;
@@ -125,13 +129,13 @@ class Main implements EventListenerObject, HandleResponse {
         }
     }
 
-    openModal(mode: string) {
+    abrirModal(mode: string) {
         let modal = document.getElementById(mode)
         var instanceModal = M.Modal.getInstance(modal);
         instanceModal.open();
     }
 
-    closeModal(mode: string) {
+    cerrarModal(mode: string) {
         let modal = document.getElementById(mode)
         var instanceModal = M.Modal.getInstance(modal);
         instanceModal.close();
@@ -162,25 +166,21 @@ class Main implements EventListenerObject, HandleResponse {
         else if (objEvento.id.startsWith("btnmod")) {
             let dispid: number = parseInt (objEvento.id.replace('btnmod',''));
             this.consultaDisp(dispid, "edit");
-            this.openModal("modalmod");
-
+            this.abrirModal("modalmod");
         }
         else if (objEvento.id.startsWith("btnsub")) {
             let dispid: number = parseInt (objEvento.id.replace('btnsub',''));
             this.consultaDisp(dispid, "delete");
-            this.openModal("modaldel");
-
+            this.abrirModal("modaldel");
         }
         else if (objEvento.id == "btnadd") {
             let dispid: number = parseInt (objEvento.id);
             this.consultaDisp(dispid, "add");
-            this.openModal("modaladd");
-  
+            this.abrirModal("modaladd");
         }
         else if (objEvento.id == "cancedita") {
-            this.closeModal("modalmod");
+            this.cerrarModal("modalmod");
         }
-        
         else if (objEvento.id == "confedita") {
             let dispid: number = +(<HTMLInputElement>document.getElementById("edit-id-disp")).value;
             let name = (<HTMLInputElement>document.getElementById("edit-name")).value;
@@ -188,39 +188,50 @@ class Main implements EventListenerObject, HandleResponse {
             let type = parseInt((<HTMLInputElement>document.getElementById("select-edit-type")).value);
             if(dispid && name && description && type) {
                 this.cambiarDispositivos(dispid, name, description, type);
-                alert("Dispositivo modificado");
+                alert("Dispositivo modificado con éxito");
                 this.refrescarSPA("modalmod");
             } else {
                 alert("complete todos los campos");
             }
         }
+        
+        else if (objEvento.id == "cancborra") {
+            this.cerrarModal("modaldel");
+        }
         else if (objEvento.id == "confborra") {
             let dispid: number = +(<HTMLInputElement>document.getElementById("input-id-borrar")).value;
             this.borrarDispositivo(dispid);
-            alert("Dispositivo eliminado");
+            alert("Dispositivo eliminado con éxito");
             this.refrescarSPA("modaldel");
         }
-            else if (objEvento.id == "cancborra") {
-            this.closeModal("modaldel");
-        }
-        
+            
         else if (objEvento.id == "cancagrega") {
-            this.closeModal("modaladd");
+            this.cerrarModal("modaladd");
+        }
+        else if (objEvento.id == "confagrega") {
+            let name = (<HTMLInputElement>document.getElementById("txt-name")).value;
+            let description = (<HTMLInputElement>document.getElementById("txt-description")).value;
+            //let range = (<HTMLInputElement>document.getElementById("txt-range-light")).value;
+            let type = (<HTMLInputElement>document.getElementById("select-type")).value;
+            if(name && description && type) {
+                this.agregarDispositivo(name, description, type);
+                alert("Dispositivo creado con éxito");
+                this.refrescarSPA("modaladd");
+            } else {
+                alert("complete todos los campos");
+            }
         }
     }
-}
-
-window.addEventListener("load", () => {
+}    
+    window.addEventListener("load", () => {
     let main: Main = new Main();
     var elems = document.querySelectorAll('select');
     var instances = M.FormSelect.init(elems, "");
     var elemsM = document.querySelectorAll('.modal');
     M.Modal.init(elemsM, "");
-    
     // Leer botones principales
     document.getElementById("btnenter").addEventListener("click", main);
     document.getElementById("btnadd").addEventListener("click", main);
-    
     // Leer botones del modal
     document.getElementById("confborra").addEventListener("click", main);
     document.getElementById("cancborra").addEventListener("click", main);

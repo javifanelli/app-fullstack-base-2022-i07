@@ -31,7 +31,7 @@ app.get('/devices/:id', function(req, res, next) { // Consultar de a 1 los dispo
     );
 });
 
-app.put('/devices/state/:id', function(req, res, next) { // Actualizar el dispositivo
+app.put('/devices/state/:id', function(req, res, next) { // Actualizar el estado del dispositivo
     utils.query('UPDATE `Devices` SET `state` = ? WHERE `id` = ?', 
     [req.body.state, req.params.id], function(err, rta, field) {
         if (err) {
@@ -44,13 +44,26 @@ app.put('/devices/state/:id', function(req, res, next) { // Actualizar el dispos
 
 app.put('/devices/:id', function(req, res, next) { // Actualizar el dispositivo
     utils.query('UPDATE `Devices` SET `name` = ?, `description` = ? , `type` = ? WHERE `id` = ?', 
-    [req.body.name, req.body.description, req.params.type, req.params.id], function(err, rta, field) {
+    [req.body.name, req.body.description, req.body.type, req.params.id], function(err, rta, field) {
         if (err) {
             res.send(err).status(400);
             return;
         }
     res.send({'changedRows': rta.changedRows}).status(200);
     });
+});
+
+app.post('/devices/', function(req, res, next) {
+    utils.query('INSERT INTO `Devices` (`name`, `description`, `state`, `type`) VALUES (?, ?, ?, ?)',
+        [req.body.name, req.body.description, req.body.state, req.body.type],
+        function(err, rta, field) {
+            if (err) {
+                res.send(err).status(400);
+                return;
+            }
+            res.send({ 'id': rta.insertId }).status(201);
+        }
+    );
 });
 
 app.delete('/devices/:id', function(req, res, next) { // Borar el dispositivo
