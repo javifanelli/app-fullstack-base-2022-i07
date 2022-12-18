@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `Devices` (
 
 INSERT INTO `Devices` (`id`, `name`, `description`, `state`, `type`) VALUES
 (1, 'Lampara 1', 'Luz living', 0, 1), -- Inicializa los dispositivos apagados. Tipo 1 son ON-OFF
-(2, 'Cortina 1', 'Cortina habitacion', 0, 2); -- Inicializa los dispositivos apagados. Tipo 2 son 0%-100% con saltos de a 20%
+(2, 'Cortina 1', 'Cortina living', 0, 2); -- Inicializa los dispositivos apagados. Tipo 2 son 0%-100% con saltos de a 20%
 
 
 --
